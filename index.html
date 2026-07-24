@@ -2,11 +2,520 @@
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="refresh" content="0; url=./web/" />
-    <link rel="canonical" href="./web/" />
-    <title>WLOC 教程</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>Shadowrocket 模块安装教程 · WLOC</title>
+    <meta
+      name="description"
+      content="Shadowrocket 模块安装、CA 证书信任、HTTPS 解密与选点定位测试完整教程。"
+    />
+    <link rel="stylesheet" href="./vendor/fontawesome/css/all.min.css" />
+    <link rel="stylesheet" href="./css/global.css" />
+    <link rel="stylesheet" href="./css/index.css" />
   </head>
   <body>
-    <p><a href="./web/">进入 WLOC 模块安装教程</a></p>
+    <div class="page-wrap">
+      <header class="site-header">
+        <div class="container site-header__inner">
+          <a class="brand" href="#top" aria-label="WLOC 教程首页">
+            <span class="brand__mark" aria-hidden="true">
+              <i class="fa-solid fa-location-crosshairs"></i>
+            </span>
+            WLOC 教程
+          </a>
+          <button
+            class="nav-toggle"
+            type="button"
+            aria-label="打开导航"
+            aria-expanded="false"
+            data-nav-toggle
+          >
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <nav class="nav" data-nav aria-label="页面导航">
+            <a href="#step-1">安装模块</a>
+            <a href="#step-2">信任证书</a>
+            <a href="#step-3">HTTPS 解密</a>
+            <a href="#step-4">选点测试</a>
+          </nav>
+        </div>
+      </header>
+
+      <main id="top">
+        <section class="hero" aria-labelledby="hero-title">
+          <div class="hero__bg" aria-hidden="true"></div>
+          <div class="hero__grid" aria-hidden="true"></div>
+          <div class="container hero__inner">
+            <div class="hero__meta">
+              <span class="chip">
+                <i class="fa-solid fa-book-open"></i>
+                图文教程
+              </span>
+              <span class="chip">
+                <i class="fa-brands fa-apple"></i>
+                iOS · Shadowrocket
+              </span>
+            </div>
+            <h1 class="hero__brand" id="hero-title">
+              <span>WLOC</span> 模块安装教程
+            </h1>
+            <p class="hero__lead">
+              按顺序完成模块订阅、CA 证书信任与 HTTPS 解密，再用选点网页写入坐标并验证定位。
+            </p>
+            <div class="hero__actions">
+              <a class="btn btn-primary" href="#step-1">
+                <i class="fa-solid fa-play"></i>
+                开始第一步
+              </a>
+              <a
+                class="btn btn-secondary"
+                href="https://github.com/Yu9191/wloc"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <i class="fa-brands fa-github"></i>
+                打开 GitHub
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <section class="overview" id="overview" aria-labelledby="overview-title">
+          <div class="container">
+            <h2 id="overview-title" class="visually-hidden">流程概览</h2>
+            <div class="overview__grid">
+              <a class="overview__item" href="#step-1">
+                <span class="overview__icon overview__icon--1" aria-hidden="true">
+                  <i class="fa-solid fa-puzzle-piece"></i>
+                </span>
+                <strong>① 安装模块</strong>
+                <span>复制订阅地址并在 Shadowrocket 模块中下载</span>
+              </a>
+              <a class="overview__item" href="#step-2">
+                <span class="overview__icon overview__icon--2" aria-hidden="true">
+                  <i class="fa-solid fa-shield-halved"></i>
+                </span>
+                <strong>② 信任证书</strong>
+                <span>安装 CA 并在系统证书信任设置中开启</span>
+              </a>
+              <a class="overview__item" href="#step-3">
+                <span class="overview__icon overview__icon--3" aria-hidden="true">
+                  <i class="fa-solid fa-lock-open"></i>
+                </span>
+                <strong>③ HTTPS 解密</strong>
+                <span>开启解密并重启一次代理</span>
+              </a>
+              <a class="overview__item" href="#step-4">
+                <span class="overview__icon overview__icon--4" aria-hidden="true">
+                  <i class="fa-solid fa-map-location-dot"></i>
+                </span>
+                <strong>④ 选点测试</strong>
+                <span>写入坐标、切换定位开关后在地图确认</span>
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <section class="guide" aria-label="详细步骤">
+          <div class="container">
+            <div class="guide__layout">
+            <div class="toc-rail">
+            <aside class="toc" aria-label="目录">
+              <p class="toc__title">本页目录</p>
+              <ul class="toc__list" data-toc>
+                <li>
+                  <a href="#step-1" data-toc-link>
+                    <span class="toc__num">1</span>
+                    安装模块
+                  </a>
+                </li>
+                <li>
+                  <a href="#step-2" data-toc-link>
+                    <span class="toc__num">2</span>
+                    信任证书
+                  </a>
+                </li>
+                <li>
+                  <a href="#step-3" data-toc-link>
+                    <span class="toc__num">3</span>
+                    HTTPS 解密
+                  </a>
+                </li>
+                <li>
+                  <a href="#step-4" data-toc-link>
+                    <span class="toc__num">4</span>
+                    选点测试
+                  </a>
+                </li>
+              </ul>
+            </aside>
+            </div>
+
+            <div class="guide__content">
+              <article class="step" id="step-1">
+                <header class="step__head">
+                  <div class="step__badge" aria-hidden="true">1</div>
+                  <div>
+                    <h2 class="step__title">安装模块</h2>
+                    <p class="step__desc">
+                      从 GitHub 获取 Shadowrocket 模块订阅地址，并在 App 中下载安装。
+                    </p>
+                  </div>
+                </header>
+                <div class="step__body">
+                  <ol class="substeps">
+                    <li>
+                      <div>
+                        <p>
+                          打开 GitHub 仓库页面，下滑找到
+                          <span class="kbd">Shadowrocket 订阅地址</span>，复制。
+                        </p>
+                        <div class="link-box">
+                          <span class="link-box__label">仓库</span>
+                          <span class="link-box__url" data-copy-text
+                            >https://github.com/Yu9191/wloc</span
+                          >
+                          <div class="link-box__actions">
+                            <button
+                              type="button"
+                              class="btn btn-sm btn-primary"
+                              data-copy="https://github.com/Yu9191/wloc"
+                            >
+                              <i class="fa-regular fa-copy"></i>
+                              复制
+                            </button>
+                            <a
+                              class="btn btn-sm btn-secondary"
+                              href="https://github.com/Yu9191/wloc"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                              打开
+                            </a>
+                          </div>
+                        </div>
+                        <div class="link-box">
+                          <span class="link-box__label">模块</span>
+                          <span class="link-box__url" data-copy-text
+                            >https://raw.githubusercontent.com/Yu9191/wloc/refs/heads/main/modules/wloc.module</span
+                          >
+                          <div class="link-box__actions">
+                            <button
+                              type="button"
+                              class="btn btn-sm btn-primary"
+                              data-copy="https://raw.githubusercontent.com/Yu9191/wloc/refs/heads/main/modules/wloc.module"
+                            >
+                              <i class="fa-regular fa-copy"></i>
+                              复制
+                            </button>
+                            <a
+                              class="btn btn-sm btn-secondary"
+                              href="https://raw.githubusercontent.com/Yu9191/wloc/refs/heads/main/modules/wloc.module"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                              打开
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div>
+                        <p>打开 Shadowrocket，按下列路径进入模块页：</p>
+                        <div class="path-flow" aria-label="操作路径">
+                          <span><i class="fa-solid fa-house"></i> 底栏「配置」</span>
+                          <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+                          <span>「模块」</span>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div>
+                        <p>
+                          点右上角 <span class="kbd">+</span> → 粘贴订阅地址 → 点
+                          <span class="kbd">下载</span> → 成功。
+                        </p>
+                        <div class="callout callout--success">
+                          <i class="fa-solid fa-circle-check" aria-hidden="true"></i>
+                          <div>模块列表中出现对应条目，即表示第一步完成。</div>
+                        </div>
+                      </div>
+                    </li>
+                  </ol>
+                </div>
+              </article>
+
+              <article class="step" id="step-2">
+                <header class="step__head">
+                  <div class="step__badge" aria-hidden="true">2</div>
+                  <div>
+                    <h2 class="step__title">安装并信任 CA 证书</h2>
+                    <p class="step__desc">
+                      在 Shadowrocket 安装证书后，还需在 iOS 系统设置中完成描述文件安装与完全信任。
+                    </p>
+                  </div>
+                </header>
+                <div class="step__body">
+                  <ol class="substeps">
+                    <li>
+                      <div>
+                        <p>进入配置编辑：</p>
+                        <div class="path-flow">
+                          <span>底栏「配置」</span>
+                          <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+                          <span>本地文件</span>
+                          <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+                          <span>「编辑配置」</span>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div>
+                        <p>
+                          点 <span class="kbd">HTTPS 解密</span> → 点
+                          <span class="kbd">证书</span>，检查是否被系统信任。
+                        </p>
+                        <p class="hint">默认通常显示「未被系统信任」。</p>
+                      </div>
+                    </li>
+                    <li>
+                      <div>
+                        <p>
+                          点 <span class="kbd">安装证书</span> → 点
+                          <span class="kbd">允许</span>。
+                        </p>
+                      </div>
+                    </li>
+                    <li>
+                      <div>
+                        <p>到系统设置安装描述文件：</p>
+                        <div class="path-flow">
+                          <span>设置</span>
+                          <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+                          <span>已下载描述文件</span>
+                          <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+                          <span>安装</span>
+                        </div>
+                        <p class="hint">
+                          按提示输入锁屏密码，再连续确认「安装」直至完成。
+                        </p>
+                      </div>
+                    </li>
+                    <li>
+                      <div>
+                        <p>开启证书完全信任：</p>
+                        <div class="path-flow">
+                          <span>设置</span>
+                          <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+                          <span>关于本机</span>
+                          <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+                          <span>证书信任设置</span>
+                        </div>
+                        <p class="hint">拉到最底部，打开刚安装证书的信任开关。</p>
+                        <div class="callout callout--warn">
+                          <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
+                          <div>
+                            仅完成「描述文件安装」不够，必须在「证书信任设置」中打开开关，HTTPS
+                            解密才会生效。
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  </ol>
+                </div>
+              </article>
+
+              <article class="step" id="step-3">
+                <header class="step__head">
+                  <div class="step__badge" aria-hidden="true">3</div>
+                  <div>
+                    <h2 class="step__title">开启「HTTPS 解密」</h2>
+                    <p class="step__desc">
+                      确认证书已受信任后开启解密，并重启一次代理使配置生效。
+                    </p>
+                  </div>
+                </header>
+                <div class="step__body">
+                  <ol class="substeps">
+                    <li>
+                      <div>
+                        <p>
+                          回到 Shadowrocket，证书应显示
+                          <span class="kbd">系统已信任</span> → 点右上角对勾保存。
+                        </p>
+                      </div>
+                    </li>
+                    <li>
+                      <div>
+                        <p>
+                          打开 <span class="kbd">HTTPS 解密</span> 开关 → 再点右上角对勾 →
+                          成功。
+                        </p>
+                      </div>
+                    </li>
+                    <li>
+                      <div>
+                        <p>
+                          点底栏 <span class="kbd">首页</span>，在顶部关闭再开启一次代理。
+                        </p>
+                        <div class="callout callout--info">
+                          <i class="fa-solid fa-rotate" aria-hidden="true"></i>
+                          <div>重启代理有助于让新模块与解密配置立即生效。</div>
+                        </div>
+                      </div>
+                    </li>
+                  </ol>
+                </div>
+              </article>
+
+              <article class="step" id="step-4">
+                <header class="step__head">
+                  <div class="step__badge" aria-hidden="true">4</div>
+                  <div>
+                    <h2 class="step__title">测试选点定位</h2>
+                    <p class="step__desc">
+                      在选点网页写入坐标到模块，通过开关定位服务验证地图 App 是否生效。
+                    </p>
+                  </div>
+                </header>
+                <div class="step__body">
+                  <div class="link-box link-box--lead">
+                    <span class="link-box__label">选点站</span>
+                    <span class="link-box__url" data-copy-text
+                      >https://lbs.lolnb.com/</span
+                    >
+                    <div class="link-box__actions">
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-primary"
+                        data-copy="https://lbs.lolnb.com/"
+                      >
+                        <i class="fa-regular fa-copy"></i>
+                        复制
+                      </button>
+                      <a
+                        class="btn btn-sm btn-secondary"
+                        href="https://lbs.lolnb.com/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        打开
+                      </a>
+                    </div>
+                  </div>
+
+                  <ol class="substeps">
+                    <li>
+                      <div>
+                        <p>
+                          打开选点网页 → 底部搜索「行政区地名」→ 点
+                          <span class="kbd">储存到设备</span>。
+                        </p>
+                        <div class="callout callout--success">
+                          <i class="fa-solid fa-circle-check" aria-hidden="true"></i>
+                          <div>
+                            出现绿色「已储存」、且无红色报错，说明坐标已写入模块。
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div>
+                        <p>临时关闭系统定位：</p>
+                        <div class="path-flow">
+                          <span>设置</span>
+                          <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+                          <span>隐私与安全性</span>
+                          <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+                          <span>定位服务</span>
+                          <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+                          <span>关闭开关</span>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div>
+                        <p>回到 Shadowrocket，关闭再开启一次代理。</p>
+                      </div>
+                    </li>
+                    <li>
+                      <div>
+                        <p>等待几秒，再打开定位开关。</p>
+                      </div>
+                    </li>
+                    <li>
+                      <div>
+                        <p>打开任意地图 App，确认定位点是否已切换到所选位置。</p>
+                        <div class="callout callout--info">
+                          <i class="fa-solid fa-lightbulb" aria-hidden="true"></i>
+                          <div>
+                            若未生效：确认模块已下载、证书已信任、HTTPS 解密已开，并再次重启代理后重试。
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  </ol>
+                </div>
+              </article>
+
+              <section class="finish" aria-labelledby="finish-title">
+                <div class="finish__inner">
+                  <div>
+                    <h2 id="finish-title">全部步骤完成后即可使用</h2>
+                    <p>
+                      日常使用：选点站写入新坐标 → 开关一次系统定位 → 刷新地图即可。
+                    </p>
+                  </div>
+                  <a
+                    class="btn btn-ghost"
+                    href="https://lbs.lolnb.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <i class="fa-solid fa-map-location-dot"></i>
+                    前往选点网页
+                  </a>
+                </div>
+              </section>
+            </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <div class="container site-footer__inner">
+          <div>
+            <strong class="footer-strong">WLOC 教程</strong>
+            · Shadowrocket 模块安装流程说明
+          </div>
+          <div>
+            资源：
+            <a
+              href="https://github.com/Yu9191/wloc"
+              target="_blank"
+              rel="noopener noreferrer"
+              >GitHub</a
+            >
+            ·
+            <a
+              href="https://lbs.lolnb.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >选点站</a
+            >
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <div class="toast" role="status" aria-live="polite" data-toast></div>
+    <script src="./js/index.js"></script>
   </body>
 </html>
